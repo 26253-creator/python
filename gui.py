@@ -3,7 +3,7 @@ from tkinter import *
 # ---------------- QUESTIONS ---------------- #
 
 questions = [
-    {"question": "Solve: x + 6 = 14",
+    {"question": "Solve: x + 6 = 20",
      "options": ["6", "8", "10", "20"],
      "answer": "8"},
 
@@ -11,7 +11,7 @@ questions = [
      "tf": True,
      "answer": "True"},
 
-    {"question": "Simplify: 3x + 2x",
+    {"question": "Simplify: 3x + 3x",
      "options": ["5", "6x", "5x", "x"],
      "answer": "5x"},
 
