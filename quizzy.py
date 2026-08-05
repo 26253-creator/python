@@ -192,25 +192,19 @@ questions = [
     },
 
     {
-        "question": "Expand: 4(x + 5)",
-        "options": [
-            "4x + 20",
-            "4x + 5",
-            "x + 20",
-            "20x"
-        ],
-        "answer": "4x + 20"
+        {
+    "question": "Word Problem:\n\nA cinema charges a booking fee of $5 plus $4 per ticket.\nThe total cost came to $29.\n\nWhat equation could be used?\n(Then work out how many tickets were bought.)",
+    "type": "",
+    
+},
     },
 
     {
-        "question": "Solve: x ÷ 4 = 5",
-        "options": [
-            "9",
-            "20",
-            "10",
-            "15"
-        ],
-        "answer": "20"
+        {
+    "question": "Word Problem:\n\nMia has $7 in her wallet.\nShe earns the same amount each day.\nAfter one week she has $42.\n\nWhat equation could be used?\n(Then work out how much she earns each day.)",
+    "type": "entry",
+    "
+}
     }
 
 ]
