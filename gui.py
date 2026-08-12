@@ -10,7 +10,7 @@ questions = [
     {"question": "The solution to x - 4 = 10 is x = 14.",
      "tf": True,
      "answer": "True"},
-
+C
     {"question": "Simplify: 3x + 3x",
      "options": ["5", "6x", "5x", "x"],
      "answer": "5x"},
