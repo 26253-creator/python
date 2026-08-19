@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
+import random
 
 
 # ---------------- QUESTION DATABASE ---------------- #
 
-questions = [
+ALL_QUESTIONS = [
     {"question": "Simplify: 3x + 5x", "options": ["8x", "15x", "8", "3x"], "answer": "8x"},
     {"question": "Solve: x + 6 = 14", "options": ["6", "8", "10", "20"], "answer": "8"},
     {"question": "Expand: 3(x + 4)", "options": ["3x + 4", "3x + 12", "x + 12", "12x"], "answer": "3x + 12"},
@@ -136,6 +137,7 @@ class QuizApp(tk.Tk):
         self.minsize(900, 680)
         self.configure(bg=BG)
 
+        self.quiz_questions = []
         self.current_question = 0
         self.score = 0
         self.correct_answers = 0
@@ -195,7 +197,7 @@ class QuizApp(tk.Tk):
 
         subtitle = tk.Label(
             self.container,
-            text="20 algebra questions",
+            text="10 algebra questions",
             bg=BG,
             fg=NAVY,
             font=("Arial", 18),
@@ -213,7 +215,16 @@ class QuizApp(tk.Tk):
 
     # ---------------- START QUIZ ---------------- #
     def start_quiz(self):
-        # Keep the original order so Questions 19 and 20 remain the written-response questions.
+        # 1. Separate MC questions (first 18) and entry questions (last 2)
+        mc_pool = ALL_QUESTIONS[:-2]
+        word_problems = ALL_QUESTIONS[-2:]
+
+        # 2. Pick 8 random multiple-choice questions
+        mc_selection = random.sample(mc_pool, 8)
+
+        # 3. Combine them so the 2 word problems are ALWAYS questions 9 and 10
+        self.quiz_questions = mc_selection + word_problems
+
         self.current_question = 0
         self.score = 0
         self.correct_answers = 0
@@ -226,11 +237,11 @@ class QuizApp(tk.Tk):
     def show_question(self):
         self.clear_screen()
 
-        if self.current_question >= len(questions):
+        if self.current_question >= len(self.quiz_questions):
             self.show_end()
             return
 
-        q = questions[self.current_question]
+        q = self.quiz_questions[self.current_question]
         self.answer = tk.StringVar()
 
         top = tk.Frame(self.container, bg=BG)
@@ -251,7 +262,7 @@ class QuizApp(tk.Tk):
 
         tk.Label(
             top,
-            text=f"{self.current_question + 1} / {len(questions)}",
+            text=f"{self.current_question + 1} / {len(self.quiz_questions)}",
             bg=BG,
             fg="#5C72B6",
             font=("Arial", 16, "bold"),
@@ -262,7 +273,7 @@ class QuizApp(tk.Tk):
         progress.update_idletasks()
         w = max(progress.winfo_width(), 700)
         rounded_rectangle(progress, 0, 3, w, 15, radius=8, fill=SOFT_GREY, outline=SOFT_GREY)
-        progress_width = w * (self.current_question / len(questions))
+        progress_width = w * (self.current_question / len(self.quiz_questions))
         if progress_width > 8:
             rounded_rectangle(progress, 0, 3, progress_width, 15, radius=8, fill=BLUE, outline=BLUE)
 
@@ -369,10 +380,10 @@ class QuizApp(tk.Tk):
             messagebox.showwarning("No Answer", "Please choose or type an answer, or use Skip.")
             return
 
-        correct_answer = questions[self.current_question]["answer"]
+        correct_answer = self.quiz_questions[self.current_question]["answer"]
         self.attempted_questions += 1
 
-        is_entry = questions[self.current_question].get("type") == "entry"
+        is_entry = self.quiz_questions[self.current_question].get("type") == "entry"
         if is_entry:
             is_correct = self.normalise_entry(selected) == self.normalise_entry(correct_answer)
         else:
@@ -398,7 +409,7 @@ class QuizApp(tk.Tk):
     def show_end(self):
         self.clear_screen()
 
-        percentage = (self.score / len(questions)) * 100
+        percentage = (self.score / len(self.quiz_questions)) * 100
         if percentage >= 90:
             grade = "Excellence"
         elif percentage >= 70:
@@ -415,7 +426,7 @@ class QuizApp(tk.Tk):
         score_card.create_text(
             470,
             92,
-            text=f"score {self.score}/{len(questions)}",
+            text=f"score {self.score}/{len(self.quiz_questions)}",
             fill=NAVY,
             font=("Arial", 42, "bold"),
         )
