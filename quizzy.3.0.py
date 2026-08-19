@@ -1,6 +1,6 @@
 """Load and manage quiz question data from text files."""
 
-from __future__ import annotations
+
 
 import os
 import random
