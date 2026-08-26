@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import sympy as sp
 import random
 
 
@@ -25,12 +26,12 @@ ALL_QUESTIONS = [
     {"question": "Substitute y = 5 into 3y + 2", "options": ["15", "17", "20", "10"], "answer": "17"},
     {"question": "The expression 2x + 3x can be simplified to 5x.", "options": ["True", "False"], "answer": "True"},
     {
-        "question": "Word Problem:\n\nA cinema charges a booking fee of $5 plus $4 per ticket.\nThe total cost came to $29.\n\nWhat equation could be used?\n(Then work out how many tickets were bought.)",
+        "question": "Word Problem:\n\nA cinema charges a booking fee of $5 plus $4 per ticket.\nThe total cost came to $29.\n\nWhat equation could be used?(in x)\n(Then work out how many tickets were bought.)",
         "type": "entry",
         "answer": "4x + 5 = 29",
     },
     {
-        "question": "Word Problem:\n\nMia has $7 in her wallet.\nShe earns the same amount each day.\nAfter one week she has $42.\n\nWhat equation could be used?\n(Then work out how much she earns each day.)",
+        "question": "Word Problem:\n\nMia has $7 in her wallet.\nShe earns the same amount each day.\nAfter one week she has $42.\n\nWhat equation could be used?(in x)\n(Then work out how much she earns each day.)",
         "type": "entry",
         "answer": "7x + 7 = 42",
     },
@@ -373,6 +374,22 @@ class QuizApp(tk.Tk):
     def normalise_entry(value):
         return "".join(value.lower().split())
 
+    def check_equation(self, equation1, equation2):
+        # Replace ^ with ** for powers
+        equation1 = equation1.replace("^", "**")
+        equation2 = equation2.replace("^", "**")
+
+        # Split both equations into left and right sides
+        left1, right1 = equation1.split("=")
+        left2, right2 = equation2.split("=")
+
+        # Convert each equation into an expression equal to 0
+        expression1 = sp.sympify(left1) - sp.sympify(right1)
+        expression2 = sp.sympify(left2) - sp.sympify(right2)
+
+        # Check whether the expressions are equivalent
+        return sp.simplify(expression1 - expression2) == 0
+
     def check_answer(self):
         selected = self.answer.get().strip()
 
@@ -385,7 +402,11 @@ class QuizApp(tk.Tk):
 
         is_entry = self.quiz_questions[self.current_question].get("type") == "entry"
         if is_entry:
-            is_correct = self.normalise_entry(selected) == self.normalise_entry(correct_answer)
+            equation1 = self.normalise_entry(selected)
+            equation2 = self.normalise_entry(correct_answer)
+            is_correct = self.check_equation(equation1, equation2)
+            print(is_correct)
+            #is_correct = self.normalise_entry(selected) == self.normalise_entry(correct_answer)
         else:
             is_correct = selected == correct_answer
 
