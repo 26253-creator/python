@@ -1,0 +1,49 @@
+questions = { "question": "Word Problem:\n\nA cinema charges a booking fee of $5 plus $4 per ticket.\nThe total cost came to $29.\n\nWhat equation could be used?\n(Then work out how many tickets were bought.)",
+        "type": "entry",
+        "answer1": "4x + 5 = 29",}
+
+answer = input("Enter the answer: ")
+
+if answer == "4x + 5 = 29":
+    print("correct")
+
+elif answer == "4x+ 5 = 29":
+    print("correct")
+
+elif answer == "4x +5 = 29":
+    print("correct")
+
+elif answer == "4x+5 = 29":
+    print("correct")
+
+elif answer == "4x +5 =29":
+    print("correct")
+
+elif answer == "4x +5= 29":
+    print("correct")
+
+elif answer == "4x+ 5 =29":
+    print("correct")
+
+elif answer == "4x+ 5= 29":
+    print("correct")
+
+elif answer == "4x + 5 =29":
+    print("correct")
+
+elif answer == "4x+5 =29":
+    print("correct")
+
+elif answer == "4x+5= 29":
+    print("correct")
+
+elif answer == "4x+5=29":
+    print("correct")
+
+elif answer == "4x +5=29":
+    print("correct")
+
+elif answer == "5 +4x=29":
+    print("correct")
+else:
+    print("incorrect")
